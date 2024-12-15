@@ -48,6 +48,8 @@ export const updateProduct = async (id: string, data: any) => {
 };
 
 export const deleteProduct = async (id: string) => {
+  console.log("the delete func is gettign called");
   const response = await axios.get(`${API_BASE}/DeleteProduct/${id}`);
+  console.log(response.data);
   return response.data;
 };
