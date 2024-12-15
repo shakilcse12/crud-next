@@ -3,10 +3,11 @@
 import { useState } from 'react';
 import { deleteProduct } from '@/lib/api';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 export default function ProductList({ initialProducts }: { initialProducts: any[] }) {
   const [products, setProducts] = useState(initialProducts);
-
+    const router = useRouter();
   const handleDelete = async (id: string) => {
     try {
       console.log(`Attempting to delete product with ID: ${id}`);
@@ -22,6 +23,10 @@ export default function ProductList({ initialProducts }: { initialProducts: any[
       console.error('Error deleting product:', error);
       alert('Something went wrong while deleting the product.');
     }
+  };
+
+  const handleClickEdit = (id: string) => {
+    router.push(`/edit/${id}`);
   };
 
   if (products.length === 0) {
@@ -61,19 +66,17 @@ export default function ProductList({ initialProducts }: { initialProducts: any[
           <tr key={product._id} className="hover:bg-gray-50">
             {/* Product Image & Name */}
             <td className="p-3 border-b flex items-center gap-3 justify-center">
-              <img
-                src="https://via.placeholder.com/50" // Placeholder image
-                alt="Product"
-                className="w-12 h-12 rounded-md object-cover"
-              />
-              <div>
-                <span className="font-medium text-gray-700">
-                  {product.ProductName}
-                </span>
-                <p className="text-gray-500 text-sm">
-                  {product.Description || 'N/A'}
-                </p>
-              </div>
+            <div className="flex items-center gap-3">
+    <img
+      src={product.Img} // Placeholder image
+      alt="Product"
+      className="w-12 h-12 rounded-md object-cover"
+    />
+    <div className="flex flex-col ml-2">
+      <span className="font-medium text-gray-700">{product.ProductName}</span>
+      <p className="text-gray-500 text-sm">{product.ProductCode || 'N/A'}</p>
+    </div>
+  </div>
             </td>
             {/* Unit Price */}
             <td className="p-3 border-b text-gray-600">
@@ -81,26 +84,27 @@ export default function ProductList({ initialProducts }: { initialProducts: any[
             </td>
             {/* Quantity */}
             <td className="p-3 border-b text-gray-600">
-              {product.Quantity || 0}
+              {product.Qty || 0}
             </td>
             {/* Total Price */}
             <td className="p-3 border-b text-gray-700 font-medium">
               $
-              {Number(product.UnitPrice || 0) * Number(product.Quantity || 0)}
+              {product.TotalPrice}
             </td>
             {/* Action Buttons */}
             <td className="p-3 border-b">
               <div className="flex justify-center gap-2">
-                <Link href={`/edit/${product._id}`}>
-                  <button className="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600 transition">
-                    <i className="fas fa-edit"></i>
-                  </button>
-                </Link>
+              <button
+  className="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600 transition"
+  onClick={() => handleClickEdit(product._id)} // Passing product._id here
+>
+  Edit
+</button>
                 <button
                   className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 transition"
                   onClick={() => handleDelete(product._id)}
                 >
-                  <i className="fas fa-trash"></i>
+                  Delete
                 </button>
               </div>
             </td>

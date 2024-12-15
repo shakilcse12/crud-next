@@ -6,7 +6,6 @@ export default async function Home() {
 
   return (
     <div>
-      <h1>Product List</h1>
       <ProductList initialProducts={products} />
     </div>
   );

@@ -8,7 +8,7 @@ export const getProducts = async () => {
       const response = await fetch(`${API_BASE}/ReadProduct`);
       const data = await response.json();
       
-      //console.log('API Response:', data); // Log the response to inspect the structure
+      console.log('API Response:', data); // Log the response to inspect the structure
       
       if (Array.isArray(data.data)) {
         return data.data; // Return data if it's an array
@@ -52,4 +52,22 @@ export const deleteProduct = async (id: string) => {
   const response = await axios.get(`${API_BASE}/DeleteProduct/${id}`);
   console.log(response.data);
   return response.data;
+};
+
+export const getProductDetails = async (id: string) => {
+  //const API_BASE = 'https://crud.teamrabbil.com/api/v1';
+
+  try {
+    const resp = await axios.get(`${API_BASE}/ReadProductByID/${id}`);
+    //console.log(resp.data);
+    
+    console.log('API Response fro single product:', resp.data); // Log the response to inspect the structure
+    
+    
+    return resp.data.data; // Return data if it's an array
+    
+  } catch (error) {
+    console.error('Error fetching products:', error);
+    return []; // Fallback to an empty array in case of error
+  }
 };
