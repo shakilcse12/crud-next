@@ -50,42 +50,30 @@ export default function EditProduct({ params }: { params: Promise<{ id: string }
   if (!formData || Object.keys(formData).length === 0) return <div>Loading...</div>;
 
   return (
-    <form
-  onSubmit={handleSubmit}
-  className="max-w-md mx-auto mt-10 p-6 bg-white shadow-lg rounded-lg border border-gray-200"
->
-  <h1 className="text-2xl font-semibold mb-6 text-gray-800 text-center">
-    Edit Product
-  </h1>
-  {Object.keys(formData)
-  .filter((key) => key !== '_id' && key !== 'CreatedDate') // Exclude '_id' field
-  .map((key) => (
-    <div key={key} className="mb-4">
-      <label
-        htmlFor={key}
-        className="block text-sm font-medium text-gray-700 capitalize"
+    <form onSubmit={handleSubmit} className="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-lg">
+      <h1 className="text-2xl font-semibold mb-6">Edit Product</h1>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {Object.keys(formData)
+          .filter((key) => key !== '_id' && key !== 'CreatedDate')
+          .map((key) => (
+          <div key={key} className="flex flex-col">
+            <label className="text-gray-700 font-medium mb-2">{key}</label>
+            <input
+              type="text"
+              name={key}
+              value={formData[key]}
+              onChange={handleChange}
+              className="border border-gray-300 p-2 rounded-lg"
+            />
+          </div>
+        ))}
+      </div>
+      <button
+        type="submit"
+        className="mt-6 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition"
       >
-        {key.replace(/([A-Z])/g, ' $1')} {/* Adds spaces for camelCase */}
-      </label>
-      <input
-        type="text"
-        id={key}
-        name={key}
-        value={formData[key]}
-        onChange={handleChange}
-        className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-        placeholder={`Enter ${key}`}
-        required
-      />
-    </div>
-  ))}
-  <button
-    type="submit"
-    className="w-full bg-blue-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-blue-600 transition duration-200"
-  >
-    Update Product
-  </button>
-</form>
-
+        Update
+      </button>
+    </form>
   );
 }
