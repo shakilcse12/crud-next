@@ -41,8 +41,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           {/* Main Content */}
           <main className="flex-1 container mx-auto p-6">{children}</main>
         </div>
-        <div className="text-red-500 text-xl font-bold">Hello Tailwind!</div>
-
       </body>
     </html>
   );
