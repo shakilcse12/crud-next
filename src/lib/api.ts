@@ -8,7 +8,7 @@ export const getProducts = async () => {
       const response = await fetch(`${API_BASE}/ReadProduct`);
       const data = await response.json();
       
-      console.log('API Response:', data); // Log the response to inspect the structure
+      //console.log('API Response:', data); // Log the response to inspect the structure
       
       if (Array.isArray(data.data)) {
         return data.data; // Return data if it's an array
